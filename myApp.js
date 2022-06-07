@@ -3,6 +3,12 @@ let app = express();
 
 console.log('Hello World');
 
+// Root-level request logger middleware.
+app.use(function(req, res, next){
+  console.log(`${req.method} ${req.path} - ${req.ip}`);
+  next();
+})
+
 // app.get('/', function(req, res){
 //   res.send("Hello Express")
 // });
@@ -17,7 +23,7 @@ console.log('Hello World');
 
 //Serve a json object.
 
-
+// Environment variables (hidden)
 app.get('/json', function(req, res){
 const mySecret = process.env['MESSAGE_STYLE'];
 if(mySecret == 'uppercase') {
