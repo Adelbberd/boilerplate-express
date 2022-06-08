@@ -43,4 +43,9 @@ app.get('/now', function(req, res, next){
   res.send({time : req.time});
 })
 
+// Get Route params from user or client.
+app.get('/:word/echo', function(req, res){
+  res.send({echo: req.params.word});
+})
+
 module.exports = app;
