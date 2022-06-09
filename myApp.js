@@ -1,13 +1,23 @@
 let express = require('express');
 let app = express();
+let bodyParser = require('body-parser');
 
 console.log('Hello World');
+
+// Body-parser with POST request middleware.
+app.use(bodyParser.urlencoded({extended: false}));
+
+app.post('/name', (req, res) => {
+  let firstname = req.body.first;
+  let lastname = req.body.last;
+  res.json({name: firstname + ' ' + lastname});
+});
 
 // Root-level request logger middleware.
 app.use(function(req, res, next){
   console.log(`${req.method} ${req.path} - ${req.ip}`);
   next();
-})
+});
 
 // app.get('/', function(req, res){
 //   res.send("Hello Express")
@@ -47,5 +57,15 @@ app.get('/now', function(req, res, next){
 app.get('/:word/echo', function(req, res){
   res.send({echo: req.params.word});
 })
+
+// Get input from client using query parameters.
+// app.route('/name').get(function(req, res){
+//   let firstname = req.query.first;
+//   let lastname = req.query.last;
+//   res.json({name: firstname + ' ' + lastname});
+// }).post(function(req, res){
+  
+//   req.query = {last: req.lastname, first: req.firstname }
+// });
 
 module.exports = app;
